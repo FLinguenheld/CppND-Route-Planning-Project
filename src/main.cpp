@@ -74,16 +74,17 @@ int main(int argc, const char **argv)
     
     // TODO 1
     cout << "Please enter start and end values:\n";
-    float start_x = AskFloat("  - Start X: ");
-    float start_y = AskFloat("  - Start Y: ");
-    float end_x = AskFloat("  - End X: ");
-    float end_y = AskFloat("  - End Y: ");
+    // float start_x = AskFloat("  - Start X: ");
+    // float start_y = AskFloat("  - Start Y: ");
+    // float end_x = AskFloat("  - End X: ");
+    // float end_y = AskFloat("  - End Y: ");
 
     // Build Model.
     RouteModel model{osm_data};
 
     // Create RoutePlanner object and perform A* search.
-    RoutePlanner route_planner{model, start_x, start_y, end_x, end_y};
+    // RoutePlanner route_planner{model, start_x, start_y, end_x, end_y};
+    RoutePlanner route_planner{model, 10, 10, 90, 90};
     route_planner.AStarSearch();
 
     cout << "Distance: " << route_planner.GetDistance() << " meters. \n";
