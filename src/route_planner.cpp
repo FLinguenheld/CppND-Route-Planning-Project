@@ -28,7 +28,7 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
         n->g_value = current_node->g_value + current_node->distance(*n);
 
         n->visited = true;
-        this->open_list.push_back(n);
+        this->open_list.emplace_back(n);
     }
 }
 
@@ -47,7 +47,6 @@ RouteModel::Node *RoutePlanner::NextNode() {
     this->open_list.pop_back();
     return node;
 }
-
 
 // Follow the parent's nodes up to the start node to build the path
 std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node *current_node) {
