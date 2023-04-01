@@ -30,7 +30,9 @@ static std::optional<vector<std::byte>> ReadFile(const string &path)
     return std::move(contents);
 }
 
-/* Ask user to enter a value and convert it into a float */
+/*
+ * Ask user to enter a value between 0 and 100 and convert it into a float
+ */
 float AskFloat(string PromptTxt)
 {
     string user_input;
@@ -39,7 +41,13 @@ float AskFloat(string PromptTxt)
         cout << PromptTxt;
         cin >> user_input;
         try{
-            return std::stof(user_input);
+            float f = std::stof(user_input);
+
+            if (f < 0.0 || f > 100.0) {
+                cout << " ! Please enter a value between 0 and 100 !\n";
+            } else {
+                return std::stof(user_input);
+            }
         }
         catch (const std::invalid_argument& ia){
             cout << " ! Please enter a float !\n";
@@ -71,20 +79,20 @@ int main(int argc, const char **argv)
         else
             osm_data = std::move(*data);
     }
-    
-    // TODO 1
+
+    // Ask user's values
     cout << "Please enter start and end values:\n";
-    // float start_x = AskFloat("  - Start X: ");
-    // float start_y = AskFloat("  - Start Y: ");
-    // float end_x = AskFloat("  - End X: ");
-    // float end_y = AskFloat("  - End Y: ");
+    float start_x = AskFloat("  - Start X: ");
+    float start_y = AskFloat("  - Start Y: ");
+    float end_x = AskFloat("  - End X: ");
+    float end_y = AskFloat("  - End Y: ");
 
     // Build Model.
     RouteModel model{osm_data};
 
     // Create RoutePlanner object and perform A* search.
-    // RoutePlanner route_planner{model, start_x, start_y, end_x, end_y};
-    RoutePlanner route_planner{model, 10, 10, 90, 90};
+    RoutePlanner route_planner{model, start_x, start_y, end_x, end_y};
+    // RoutePlanner route_planner{model, 10, 10, 90, 90};
     route_planner.AStarSearch();
 
     cout << "Distance: " << route_planner.GetDistance() << " meters. \n";
