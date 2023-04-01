@@ -17,7 +17,9 @@ float RoutePlanner::CalculateHValue(RouteModel::Node const *node) {
     return node->distance(*this->end_node);
 }
 
-// Expand the current node by adding all unvisited neighbors to the open list
+/*
+ * Expand the current node by adding all unvisited neighbors to the open list
+ */
 void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
 
     current_node->FindNeighbors();
@@ -32,7 +34,9 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
     }
 }
 
-// Used to sort open_list
+/*
+ * Used to sort open_list
+ */
 bool CompareSumHG(const RouteModel::Node *n1, const RouteModel::Node *n2)
 {
     return (n1->h_value + n1->g_value) > (n2->h_value + n2->g_value);
@@ -48,7 +52,9 @@ RouteModel::Node *RoutePlanner::NextNode() {
     return node;
 }
 
-// Follow the parent's nodes up to the start node to build the path
+/*
+ * Follow the parent's nodes up to the start node to build the path
+ */
 std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node *current_node) {
 
     // Create path_found vector
@@ -69,7 +75,9 @@ std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node 
     return path_found;
 }
 
-// A* Search algorithm
+/*
+ * A* Search algorithm
+ */
 void RoutePlanner::AStarSearch() {
 
     RouteModel::Node *current_node = this->start_node;
